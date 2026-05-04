@@ -4,7 +4,7 @@
 
 export const config = {
   community: {
-    name:     "קהילת צ'אקיר בקידמת ה-AI הדנטלי",
+    name:     "קהילת דנטל צ'אקיר בקידמת ה-AI הדנטלי",
     nameEn:   "Chakir Dental AI Community",
     tagline:  "חדשנות • מקצועיות • עתיד הדנטיסטריה",
     taglineEn:"Innovation • Professionalism • The Future of Dentistry",

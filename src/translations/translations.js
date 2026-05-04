@@ -22,7 +22,7 @@ export const translations = {
     },
 
     landing: {
-      headline:    "קהילת צ'אקיר",
+      headline:    "קהילת דנטל צ'אקיר",
       subheadline: "בקידמת ה-AI הדנטלי",
       tagline:     'חדשנות • מקצועיות • עתיד הדנטיסטריה',
       welcome:     'ברוכים הבאים!',
