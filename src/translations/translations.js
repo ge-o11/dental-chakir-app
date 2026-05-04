@@ -30,7 +30,7 @@ export const translations = {
       cta:         'כניסה לסדנה עם קוד אישי',
       features: [
         { icon: 'Brain',   text: 'בינה מלאכותית מתקדמת' },
-        { icon: 'Users',   text: 'קהילת מקצוענים' },
+        { icon: 'Users',   text: 'קהילה מקצועית' },
         { icon: 'Star',    text: 'הטבות בלעדיות' },
         { icon: 'Zap',     text: 'טכנולוגיה חדישה' },
       ],
