@@ -50,10 +50,22 @@ export default function LandingPage() {
 
         {/* Description card */}
         <div className="max-w-sm w-full bg-white/10 backdrop-blur-sm rounded-2xl p-5
-          border border-white/20 mb-8 animate-fade-in">
+          border border-white/20 mb-6 animate-fade-in">
           <p className="text-white font-bold text-lg mb-1">{tr.landing.welcome}</p>
           <p className="text-white/80 text-sm leading-relaxed" style={{ whiteSpace: 'pre-line' }}>{tr.landing.description}</p>
         </div>
+
+        {/* CTA */}
+        <button
+          onClick={() => actions.setPage('code-entry')}
+          className="w-full max-w-sm flex items-center justify-center gap-3
+            bg-white text-brand-800 font-bold text-lg py-4 px-8 rounded-2xl
+            shadow-2xl shadow-brand-900/30 hover:bg-brand-50 active:scale-95
+            transition-all duration-200 animate-slide-up mb-6"
+        >
+          <span>{tr.landing.cta}</span>
+          <ArrowIcon size={20} />
+        </button>
 
         {/* Features grid */}
         <div className="grid grid-cols-2 gap-3 max-w-sm w-full mb-8 animate-fade-in">
@@ -69,18 +81,6 @@ export default function LandingPage() {
             )
           })}
         </div>
-
-        {/* CTA */}
-        <button
-          onClick={() => actions.setPage('code-entry')}
-          className="w-full max-w-sm flex items-center justify-center gap-3
-            bg-white text-brand-800 font-bold text-lg py-4 px-8 rounded-2xl
-            shadow-2xl shadow-brand-900/30 hover:bg-brand-50 active:scale-95
-            transition-all duration-200 animate-slide-up"
-        >
-          <span>{tr.landing.cta}</span>
-          <ArrowIcon size={20} />
-        </button>
 
         {/* Divider waves */}
         <div className="mt-10 flex gap-2 items-center opacity-30">
