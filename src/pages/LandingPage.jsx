@@ -52,7 +52,7 @@ export default function LandingPage() {
         <div className="max-w-sm w-full bg-white/10 backdrop-blur-sm rounded-2xl p-5
           border border-white/20 mb-8 animate-fade-in">
           <p className="text-white font-bold text-lg mb-1">{tr.landing.welcome}</p>
-          <p className="text-white/80 text-sm leading-relaxed">{tr.landing.description}</p>
+          <p className="text-white/80 text-sm leading-relaxed" style={{ whiteSpace: 'pre-line' }}>{tr.landing.description}</p>
         </div>
 
         {/* Features grid */}
