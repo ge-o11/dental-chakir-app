@@ -39,8 +39,9 @@ export const translations = {
     codeEntry: {
       title:       'כניסה לקהילה',
       subtitle:    'הזן את הקוד האישי שקיבלת',
+      subtitleFree: 'לכניסה חינמית לסדנה',
       label:       'קוד אישי',
-      placeholder: 'הזן את הקוד שלך...',
+      placeholder: 'נא להזין את הקוד',
       submit:      'כניסה',
       validating:  'מאמת קוד...',
       freeMessage: 'הסדנה בשווי {price}₪ ניתנת לך בחינם כחבר קהילה באמצעות הקוד שקיבלת.',

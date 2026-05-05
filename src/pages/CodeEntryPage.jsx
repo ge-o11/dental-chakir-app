@@ -84,6 +84,7 @@ export default function CodeEntryPage() {
               </div>
               <h1 className="text-white font-bold text-2xl">{tr.codeEntry.title}</h1>
               <p className="text-white/80 text-sm mt-1">{tr.codeEntry.subtitle}</p>
+              <p className="text-teal-300 font-semibold text-sm mt-1">🎁 {tr.codeEntry.subtitleFree}</p>
             </div>
 
             <div className="h-5 -mt-5 bg-white rounded-t-3xl" />
@@ -190,8 +191,8 @@ export default function CodeEntryPage() {
                   <p className="text-white font-bold text-sm">
                     {tr.codeEntry.noCodeBtn}
                   </p>
-                  <p className="text-white/60 text-xs mt-0.5 leading-snug">
-                    {tr.codeEntry.noCodeNote
+                  <p className="text-amber-300 text-xs mt-0.5 leading-snug font-semibold">
+                    💳 {tr.codeEntry.noCodeNote
                       .replace('{price}', `${config.workshop.price}${config.workshop.currency}`)}
                   </p>
                 </div>
