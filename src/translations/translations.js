@@ -63,8 +63,8 @@ export const translations = {
       phoneLbl:        'מספר טלפון',
       phonePlaceholder:'05X-XXX-XXXX',
       passLbl:         'סיסמה',
-      passPlaceholder: 'צור סיסמה (6+ תווים)',
-      submit:          'כניסה לאפליקציה',
+      passPlaceholder: 'יצירת סיסמה (6+ תווים)',
+      submit:          'כניסה',
       logging:         'כניסה...',
       codeReminder:    'הקוד שלך:',
       errors: {
