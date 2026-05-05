@@ -4,10 +4,16 @@ import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
 import { config } from '../config/config.js'
 import LanguageSwitcher from '../components/LanguageSwitcher.jsx'
+import { supabase } from '../lib/supabase.js'
 
-function validateCode(code) {
+async function validateCode(code) {
   if (!code.trim()) return 'required'
-  if (config.validCodes && !config.validCodes.includes(code.trim().toUpperCase())) return 'invalid'
+  const { data, error } = await supabase
+    .from('members_codes')
+    .select('coupon')
+    .eq('coupon', code.trim().toUpperCase())
+    .maybeSingle()
+  if (error || !data) return 'invalid'
   return null
 }
 
@@ -27,12 +33,12 @@ export default function CodeEntryPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const err = validateCode(code)
-    if (err) { setError(tr.codeEntry.errors[err]); return }
+    if (!code.trim()) { setError(tr.codeEntry.errors['required']); return }
     setError('')
     setLoading(true)
-    await new Promise(r => setTimeout(r, 800))
+    const err = await validateCode(code)
     setLoading(false)
+    if (err) { setError(tr.codeEntry.errors[err]); return }
     actions.validateCode(code.trim().toUpperCase())
     setValidated(true)
   }
