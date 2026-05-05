@@ -2,6 +2,7 @@ import React from 'react'
 import { useApp } from '../context/AppContext.jsx'
 import Header from '../components/Header.jsx'
 import RightSideMenu from '../components/RightSideMenu.jsx'
+import CreditsCard from '../components/CreditsCard.jsx'
 
 import WorkshopDetails      from './WorkshopDetails.jsx'
 import WorkshopRegistration from './WorkshopRegistration.jsx'
@@ -32,8 +33,9 @@ export default function DashboardLayout() {
       <Header showMenu />
       <RightSideMenu />
 
-      <main className="flex-1 pt-[64px] pb-8 px-4 max-w-lg mx-auto w-full">
-        <div key={state.currentSection} className="page-enter">
+      <main className="flex-1 pt-[64px] pb-8 max-w-lg mx-auto w-full">
+        {state.hasCode && <CreditsCard />}
+        <div key={state.currentSection} className="page-enter px-4 pt-4">
           <SectionComponent />
         </div>
       </main>
