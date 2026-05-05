@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   BookOpen, ClipboardList, Info, ShoppingBag,
-  MapPin, Phone, HelpCircle, Gift, X,
+  MapPin, Phone, HelpCircle, Gift, X, Coins,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
+import { supabase } from '../lib/supabase.js'
 
 const MENU_ITEMS = [
   { key: 'workshop-details',      icon: BookOpen,       navKey: 'workshopDetails' },
@@ -21,6 +22,19 @@ export default function RightSideMenu() {
   const { state, actions } = useApp()
   const tr = translations[state.language]
   const isRTL = ['he', 'ar'].includes(state.language)
+  const [credits, setCredits]   = useState(null)
+  const [isActive, setIsActive] = useState(true)
+
+  useEffect(() => {
+    if (!state.code || !state.menuOpen) return
+    supabase.from('members_credits')
+      .select('credits, is_active')
+      .eq('coupon', state.code)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) { setCredits(data.credits); setIsActive(data.is_active) }
+      })
+  }, [state.code, state.menuOpen])
 
   return (
     <>
@@ -68,6 +82,32 @@ export default function RightSideMenu() {
               <p className="text-white font-mono font-bold text-sm tracking-wider">
                 {state.code}
               </p>
+            </div>
+          )}
+
+          {/* Credits box */}
+          {state.hasCode && (
+            <div className="mt-3 rounded-xl overflow-hidden border border-yellow-400/30"
+              style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0d7377 100%)' }}>
+              <div className="px-3 py-3 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
+                  <Coins size={20} className="text-yellow-300" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white/60 text-xs">{isRTL ? 'הקרדיטים שלך' : 'Your credits'}</p>
+                  {credits === null ? (
+                    <div className="h-5 w-16 bg-white/20 rounded animate-pulse mt-0.5" />
+                  ) : (
+                    <p className="text-white font-black text-xl leading-tight">
+                      {credits.toLocaleString()}
+                      <span className="text-yellow-300 text-xs font-semibold mr-1"> קרדיט</span>
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className={`px-3 py-1.5 text-center text-xs font-medium ${isActive ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
+                {isActive ? '✅ צובר 10 קרדיט ביום' : '⛔ לא צובר קרדיטים'}
+              </div>
             </div>
           )}
         </div>
