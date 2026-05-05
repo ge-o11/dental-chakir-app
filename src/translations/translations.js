@@ -52,7 +52,7 @@ export const translations = {
       noCodeNote:  'הסדנה תהיה בתשלום של {price}',
       errors: {
         required: 'יש להזין קוד',
-        invalid:  'קוד לא חוקי. אנא בדוק את הקוד שקיבלת.',
+        invalid:  'קוד שגוי, נא לנסות שנית.',
       },
     },
 
