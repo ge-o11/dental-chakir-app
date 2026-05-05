@@ -101,9 +101,12 @@ export default function CreditsCard() {
               )}
             </div>
 
-            <div className="flex items-center gap-1.5 bg-yellow-400/15 border border-yellow-400/25 rounded-xl px-3 py-1.5">
-              <TrendingUp size={13} className="text-yellow-300" />
-              <span className="text-yellow-200 text-xs font-bold">+10 קרדיט / יום</span>
+            <div className="flex flex-col items-end gap-1">
+              <div className="flex items-center gap-1.5 bg-yellow-400/15 border border-yellow-400/25 rounded-xl px-3 py-1.5">
+                <TrendingUp size={13} className="text-yellow-300" />
+                <span className="text-yellow-200 text-xs font-bold">+10 קרדיט / יום</span>
+              </div>
+              <span className="text-white/40 text-[10px]">🎁 +100 בונוס הצטרפות</span>
             </div>
           </div>
         </div>
