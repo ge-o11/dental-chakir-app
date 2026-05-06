@@ -53,7 +53,6 @@ function reducer(state, action) {
       return { ...state, code: action.payload, codeValidated: true, hasCode: true }
 
     case 'SKIP_CODE':
-      // Enter without coupon — goes straight to login, no free benefit
       return { ...state, code: '', codeValidated: false, hasCode: false, currentPage: 'login' }
 
     case 'LOGIN':
@@ -73,6 +72,14 @@ function reducer(state, action) {
         codeValidated: false,
         hasCode: false,
         currentPage: 'landing',
+        menuOpen: false,
+      }
+
+    case 'RESTORE_FROM_HISTORY':
+      return {
+        ...state,
+        currentPage:    action.payload.page,
+        currentSection: action.payload.section || state.currentSection,
         menuOpen: false,
       }
 
@@ -114,16 +121,57 @@ export function AppProvider({ children }) {
     }
   }, [state.user])
 
+  // Browser history integration — back/forward arrows
+  useEffect(() => {
+    // Stamp the current entry so back-button has somewhere to land
+    window.history.replaceState(
+      { page: state.currentPage, section: state.currentSection },
+      ''
+    )
+
+    const onPopstate = (e) => {
+      if (e.state?.page) {
+        dispatch({ type: 'RESTORE_FROM_HISTORY', payload: e.state })
+      }
+    }
+
+    window.addEventListener('popstate', onPopstate)
+    return () => window.removeEventListener('popstate', onPopstate)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const pushHistory = (page, section) => {
+    window.history.pushState({ page, section }, '')
+  }
+
   const actions = {
-    setLanguage:     (lang)    => dispatch({ type: 'SET_LANGUAGE', payload: lang }),
-    setPage:         (page)    => dispatch({ type: 'SET_PAGE',     payload: page }),
-    setSection:      (section) => dispatch({ type: 'SET_SECTION',  payload: section }),
-    toggleMenu:      ()        => dispatch({ type: 'TOGGLE_MENU' }),
-    closeMenu:       ()        => dispatch({ type: 'CLOSE_MENU' }),
-    validateCode:    (code)    => dispatch({ type: 'VALIDATE_CODE', payload: code }),
-    skipCode:        ()        => dispatch({ type: 'SKIP_CODE' }),
-    login:           (userData)=> dispatch({ type: 'LOGIN',        payload: userData }),
-    logout:          ()        => dispatch({ type: 'LOGOUT' }),
+    setLanguage:  (lang)     => dispatch({ type: 'SET_LANGUAGE', payload: lang }),
+    toggleMenu:   ()         => dispatch({ type: 'TOGGLE_MENU' }),
+    closeMenu:    ()         => dispatch({ type: 'CLOSE_MENU' }),
+
+    setPage: (page) => {
+      pushHistory(page, state.currentSection)
+      dispatch({ type: 'SET_PAGE', payload: page })
+    },
+    setSection: (section) => {
+      pushHistory(state.currentPage, section)
+      dispatch({ type: 'SET_SECTION', payload: section })
+    },
+    validateCode: (code) => {
+      pushHistory('login', state.currentSection)
+      dispatch({ type: 'VALIDATE_CODE', payload: code })
+    },
+    skipCode: () => {
+      pushHistory('login', state.currentSection)
+      dispatch({ type: 'SKIP_CODE' })
+    },
+    login: (userData) => {
+      pushHistory('dashboard', 'workshop-registration')
+      dispatch({ type: 'LOGIN', payload: userData })
+    },
+    logout: () => {
+      window.history.replaceState({ page: 'landing', section: 'workshop-details' }, '')
+      dispatch({ type: 'LOGOUT' })
+    },
   }
 
   return (
