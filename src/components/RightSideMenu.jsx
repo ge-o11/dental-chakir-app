@@ -28,13 +28,18 @@ export default function RightSideMenu() {
   const { state, actions } = useApp()
   const tr = translations[state.language]
   const isRTL = ['he', 'ar'].includes(state.language)
-  const [credits, setCredits]   = useState(null)
-  const [isActive, setIsActive] = useState(true)
+  const [credits,       setCredits]       = useState(null)
+  const [isActive,      setIsActive]      = useState(true)
+  const [creditsLoaded, setCreditsLoaded] = useState(false)
 
   useEffect(() => {
     if (!state.menuOpen) return
+    // Reset on each open so stale data doesn't flash
+    setCredits(null)
+    setCreditsLoaded(false)
+
     const byPhone = !state.code && state.user?.phone
-    if (!state.code && !byPhone) return
+    if (!state.code && !byPhone) { setCreditsLoaded(true); return }
 
     const q = byPhone
       ? supabase.from('members_credits').select('credits, is_active').eq('phone', state.user.phone)
@@ -42,6 +47,7 @@ export default function RightSideMenu() {
 
     q.maybeSingle().then(({ data }) => {
       if (data) { setCredits(data.credits); setIsActive(data.is_active) }
+      setCreditsLoaded(true)
     })
   }, [state.code, state.menuOpen, state.user?.phone])
 
@@ -94,8 +100,8 @@ export default function RightSideMenu() {
             </div>
           )}
 
-          {/* Credits box */}
-          {state.user && (
+          {/* Credits box — only for community members (found in DB) */}
+          {state.user && (!creditsLoaded || credits !== null) && (
             <div className="mt-3 rounded-xl overflow-hidden border border-yellow-400/30"
               style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0d7377 100%)' }}>
               <div className="px-3 py-3 flex items-center gap-3">
