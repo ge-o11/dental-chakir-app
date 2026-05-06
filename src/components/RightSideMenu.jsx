@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   BookOpen, ClipboardList, Info, ShoppingBag,
-  MapPin, Phone, HelpCircle, Gift, X, Coins, Globe,
+  MapPin, Phone, HelpCircle, Gift, X, Coins, Globe, Sparkles,
 } from 'lucide-react'
 
 const FacebookIcon = ({ size = 14 }) => (
@@ -100,7 +100,7 @@ export default function RightSideMenu() {
             </div>
           )}
 
-          {/* Credits box — only for community members (found in DB) */}
+          {/* Credits box — community members only */}
           {state.user && (!creditsLoaded || credits !== null) && (
             <div className="mt-3 rounded-xl overflow-hidden border border-yellow-400/30"
               style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0d7377 100%)' }}>
@@ -123,6 +123,36 @@ export default function RightSideMenu() {
               <div className={`px-3 py-1.5 text-center text-xs font-medium ${isActive ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
                 {isActive ? '✅ צובר 10 קרדיט ביום' : '⛔ לא צובר קרדיטים'}
               </div>
+            </div>
+          )}
+
+          {/* Join community CTA — for non-members */}
+          {state.user && creditsLoaded && credits === null && (
+            <div className="mt-3 rounded-xl overflow-hidden border border-teal-400/30"
+              style={{ background: 'linear-gradient(135deg, #0f2744 0%, #0d5c55 100%)' }}>
+              <div className="px-3 pt-3 pb-2 flex items-start gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-teal-400/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Sparkles size={17} className="text-teal-300" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white font-bold text-sm leading-snug">
+                    {isRTL ? 'הצטרף לקהילה!' : 'Join the community!'}
+                  </p>
+                  <p className="text-white/60 text-xs mt-0.5 leading-relaxed">
+                    {isRTL
+                      ? 'חברי קהילה מקבלים 100 קרדיט ומצברים עוד 10 כל יום'
+                      : 'Members get 100 credits + earn 10 more every day'}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => { actions.setSection('contact'); actions.closeMenu() }}
+                className="w-full py-2 text-center text-xs font-bold text-teal-200
+                  bg-teal-500/20 hover:bg-teal-500/35 active:bg-teal-500/50
+                  transition-colors border-t border-teal-400/20"
+              >
+                {isRTL ? '✨ צור קשר להצטרפות' : '✨ Contact us to join'}
+              </button>
             </div>
           )}
         </div>
