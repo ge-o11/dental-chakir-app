@@ -11,6 +11,7 @@ export const translations = {
     flag: '🇮🇱',
 
     nav: {
+      profile:              'הפרופיל שלי',
       workshopDetails:      'פרטי הסדנה',
       workshopRegistration: 'הרשמה לסדנה',
       about:                'על דנטל צ\'אקיר',
@@ -310,6 +311,7 @@ export const translations = {
     flag: '🇸🇦',
 
     nav: {
+      profile:              'ملفي الشخصي',
       workshopDetails:      'تفاصيل الورشة',
       workshopRegistration: 'التسجيل في الورشة',
       about:                'عن دنتال شاكير',
@@ -546,6 +548,7 @@ export const translations = {
     flag: '🇷🇺',
 
     nav: {
+      profile:              'Мой профиль',
       workshopDetails:      'Детали воркшопа',
       workshopRegistration: 'Запись на воркшоп',
       about:                'О Dental Chakir',
@@ -782,6 +785,7 @@ export const translations = {
     flag: '🇬🇧',
 
     nav: {
+      profile:              'My Profile',
       workshopDetails:      'Workshop Details',
       workshopRegistration: 'Register for Workshop',
       about:                'About Dental Chakir',

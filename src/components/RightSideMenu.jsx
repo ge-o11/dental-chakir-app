@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   BookOpen, ClipboardList, Info, ShoppingBag,
-  MapPin, Phone, HelpCircle, Gift, X, Coins, Globe, Sparkles,
+  MapPin, Phone, HelpCircle, Gift, X, Coins, Globe, Sparkles, UserCircle,
 } from 'lucide-react'
 
 const FacebookIcon = ({ size = 14 }) => (
@@ -14,6 +14,7 @@ import { translations } from '../translations/translations.js'
 import { supabase } from '../lib/supabase.js'
 
 const MENU_ITEMS = [
+  { key: 'profile',               icon: UserCircle,     navKey: 'profile' },
   { key: 'workshop-details',      icon: BookOpen,       navKey: 'workshopDetails' },
   { key: 'workshop-registration', icon: ClipboardList,  navKey: 'workshopRegistration' },
   { key: 'about',                 icon: Info,           navKey: 'about' },

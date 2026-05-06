@@ -4,6 +4,7 @@ import Header from '../components/Header.jsx'
 import RightSideMenu from '../components/RightSideMenu.jsx'
 import CreditsCard from '../components/CreditsCard.jsx'
 
+import ProfilePage          from './ProfilePage.jsx'
 import WorkshopDetails      from './WorkshopDetails.jsx'
 import WorkshopRegistration from './WorkshopRegistration.jsx'
 import AboutDentalChakir    from './AboutDentalChakir.jsx'
@@ -14,6 +15,7 @@ import FAQ                  from './FAQ.jsx'
 import CommunityBenefits    from './CommunityBenefits.jsx'
 
 const SECTIONS = {
+  'profile':               ProfilePage,
   'workshop-details':      WorkshopDetails,
   'workshop-registration': WorkshopRegistration,
   'about':                 AboutDentalChakir,
