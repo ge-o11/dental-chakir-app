@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import {
   BookOpen, ClipboardList, Info, ShoppingBag,
-  MapPin, Phone, HelpCircle, Gift, X, Coins,
+  MapPin, Phone, HelpCircle, Gift, X, Coins, Globe,
 } from 'lucide-react'
+
+const FacebookIcon = ({ size = 14 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+)
 import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
 import { supabase } from '../lib/supabase.js'
@@ -140,12 +146,40 @@ export default function RightSideMenu() {
           })}
         </nav>
 
-        {/* Free badge */}
-        <div className="p-4 border-t border-gray-100">
+        {/* Free badge + Social links */}
+        <div className="p-4 border-t border-gray-100 space-y-3">
           <div className="bg-gradient-to-r from-brand-50 to-teal-50 rounded-xl p-3 border border-brand-100">
             <p className="text-brand-700 font-bold text-xs text-center">
               {isRTL ? '🎁 הסדנה חינמית לחברי קהילה!' : '🎁 Free workshop for members!'}
             </p>
+          </div>
+
+          {/* External links */}
+          <div className="flex gap-2">
+            <a
+              href="https://www.dentalchakir.co.il/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl
+                bg-brand-50 border border-brand-100 text-brand-700
+                hover:bg-brand-100 active:scale-95 transition-all duration-150
+                text-xs font-semibold"
+            >
+              <Globe size={13} />
+              <span>{isRTL ? 'האתר' : 'Website'}</span>
+            </a>
+            <a
+              href="https://www.facebook.com/dentalchakir"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl
+                bg-blue-50 border border-blue-100 text-blue-700
+                hover:bg-blue-100 active:scale-95 transition-all duration-150
+                text-xs font-semibold"
+            >
+              <FacebookIcon size={13} />
+              <span>{isRTL ? 'פייסבוק' : 'Facebook'}</span>
+            </a>
           </div>
         </div>
       </aside>

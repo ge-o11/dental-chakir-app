@@ -1,5 +1,11 @@
 import React from 'react'
-import { Brain, Users, Star, Zap, ArrowLeft, ArrowRight } from 'lucide-react'
+import { Brain, Users, Star, Zap, ArrowLeft, ArrowRight, Globe } from 'lucide-react'
+
+const FacebookIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+)
 import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
 import LanguageSwitcher from '../components/LanguageSwitcher.jsx'
@@ -89,6 +95,34 @@ export default function LandingPage() {
               i === 2 ? 'h-5' : i === 1 || i === 3 ? 'h-3' : 'h-1.5'
             }`} />
           ))}
+        </div>
+
+        {/* Social / external links */}
+        <div className="mt-6 flex gap-3 animate-fade-in">
+          <a
+            href="https://www.dentalchakir.co.il/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl
+              bg-white/15 border border-white/25 backdrop-blur-sm
+              text-white text-sm font-semibold
+              hover:bg-white/25 active:scale-95 transition-all duration-200"
+          >
+            <Globe size={15} className="text-teal-300" />
+            <span>{isRTL ? 'האתר הרשמי' : 'Our Website'}</span>
+          </a>
+          <a
+            href="https://www.facebook.com/dentalchakir"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl
+              bg-white/15 border border-white/25 backdrop-blur-sm
+              text-white text-sm font-semibold
+              hover:bg-white/25 active:scale-95 transition-all duration-200"
+          >
+            <FacebookIcon size={15} />
+            <span>{isRTL ? 'פייסבוק' : 'Facebook'}</span>
+          </a>
         </div>
       </div>
     </div>
