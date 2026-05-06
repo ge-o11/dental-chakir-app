@@ -151,7 +151,7 @@ export default function RightSideMenu() {
                   bg-teal-500/20 hover:bg-teal-500/35 active:bg-teal-500/50
                   transition-colors border-t border-teal-400/20"
               >
-                {isRTL ? '✨ צור קשר להצטרפות' : '✨ Contact us to join'}
+                {isRTL ? '✨ הצטרף לקהילה' : '✨ Join the community'}
               </button>
             </div>
           )}
