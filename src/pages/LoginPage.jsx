@@ -41,10 +41,19 @@ export default function LoginPage() {
     setLoading(true)
 
     const cleanPhone = phone.trim()
+
+    // Build list of formats to try: 0503475825 → also try 972503475825 and vice versa
+    const variants = new Set([cleanPhone])
+    const digits = cleanPhone.replace(/\D/g, '')
+    if (digits.startsWith('0') && digits.length === 10)
+      variants.add('972' + digits.slice(1))       // 0503... → 972503...
+    if (digits.startsWith('972') && digits.length === 12)
+      variants.add('0' + digits.slice(3))          // 972503... → 0503...
+
     const { data: member, error } = await supabase
       .from('members_codes')
       .select('phone, name, password')
-      .eq('phone', cleanPhone)
+      .in('phone', [...variants])
       .maybeSingle()
 
     if (error) {
