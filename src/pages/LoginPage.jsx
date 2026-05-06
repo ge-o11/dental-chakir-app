@@ -47,19 +47,40 @@ export default function LoginPage() {
       .eq('phone', cleanPhone)
       .maybeSingle()
 
-    setLoading(false)
-
-    if (error || !member) {
-      setErrors({ phone: tr.login.errors.notFound || 'מספר טלפון לא נמצא במערכת' })
+    if (error) {
+      setLoading(false)
+      setErrors({ phone: tr.login.errors.notFound || 'שגיאה, נסה שוב' })
       return
     }
 
-    // If member has a password set — validate it
+    // First time — auto-register phone in system
+    if (!member) {
+      await supabase.from('members_codes').insert({
+        phone:     cleanPhone,
+        password:  pass,
+        is_active: false,
+        date_joined: new Date().toISOString().split('T')[0],
+      })
+      setLoading(false)
+      actions.login({ phone: cleanPhone, name: '', isLoggedIn: true })
+      return
+    }
+
+    // Existing user — validate password if set
     if (member.password && member.password !== pass) {
+      setLoading(false)
       setErrors({ pass: tr.login.errors.wrongPass || 'סיסמה שגויה' })
       return
     }
 
+    // First login after admin added phone — save the password they chose
+    if (!member.password) {
+      await supabase.from('members_codes')
+        .update({ password: pass })
+        .eq('phone', cleanPhone)
+    }
+
+    setLoading(false)
     actions.login({ phone: cleanPhone, name: member.name || '', isLoggedIn: true })
   }
 
