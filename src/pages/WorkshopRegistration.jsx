@@ -5,6 +5,7 @@ import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
 import { config } from '../config/config.js'
 import { storage } from '../context/AppContext.jsx'
+import { supabase } from '../lib/supabase.js'
 
 function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -13,7 +14,7 @@ function validateEmail(email) {
 const isRTL = (lang) => ['he', 'ar'].includes(lang)
 
 export default function WorkshopRegistration() {
-  const { state } = useApp()
+  const { state, actions } = useApp()
   const tr = translations[state.language]
   const w  = tr.workshopRegistration
   const rtl = isRTL(state.language)
@@ -61,6 +62,18 @@ export default function WorkshopRegistration() {
       timestamp:    new Date().toISOString(),
       workshopDate: config.workshop.date,
     })
+
+    // Save name permanently to state + DB
+    if (form.fullName.trim()) {
+      actions.setUserName(form.fullName.trim())
+      if (state.user?.phone) {
+        supabase.from('members_codes')
+          .update({ name: form.fullName.trim() })
+          .eq('phone', state.user.phone)
+          .then(() => {})
+      }
+    }
+
     setSubmitting(false)
     setSuccess(true)
   }

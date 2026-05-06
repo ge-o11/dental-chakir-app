@@ -67,28 +67,40 @@ export default function RightSideMenu() {
           flex flex-col transition-transform duration-300 ease-in-out
           ${state.menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        {/* Drawer header */}
+        {/* Drawer header — Profile */}
         <div className="bg-gradient-to-r from-brand-800 to-teal-600 px-5 pt-14 pb-5">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white font-bold text-base leading-tight">
-                {isRTL ? "תפריט" : "Menu"}
-              </p>
-              {state.user?.name && (
-                <p className="text-white/75 text-xs mt-0.5 truncate max-w-[160px]">
-                  {state.user.name}
+
+          {/* Profile row */}
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              {/* Avatar */}
+              <div className="w-12 h-12 rounded-2xl bg-white/20 border border-white/30
+                flex items-center justify-center flex-shrink-0 shadow-lg">
+                <span className="text-white font-black text-xl leading-none">
+                  {state.user?.name ? state.user.name.trim().charAt(0) : '👤'}
+                </span>
+              </div>
+              {/* Name + Phone */}
+              <div className="min-w-0">
+                <p className="text-white font-bold text-base leading-tight truncate max-w-[140px]">
+                  {state.user?.name || (isRTL ? 'משתמש' : 'User')}
                 </p>
-              )}
+                {state.user?.phone && (
+                  <p className="text-white/65 text-xs mt-0.5 font-mono" dir="ltr">
+                    {state.user.phone}
+                  </p>
+                )}
+              </div>
             </div>
             <button
               onClick={actions.closeMenu}
-              className="p-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors"
+              className="p-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors flex-shrink-0"
             >
               <X size={18} />
             </button>
           </div>
 
-          {/* Code display in menu */}
+          {/* Code display */}
           {state.code && (
             <div className="mt-3 px-3 py-2 rounded-lg bg-white/15 border border-white/25">
               <p className="text-white/70 text-xs mb-0.5">
@@ -120,8 +132,16 @@ export default function RightSideMenu() {
                   )}
                 </div>
               </div>
-              <div className={`px-3 py-1.5 text-center text-xs font-medium ${isActive ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
+              <div className={`px-3 py-1.5 text-center text-xs font-semibold border-t border-white/10
+                ${isActive ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
                 {isActive ? '✅ צובר 10 קרדיט ביום' : '⛔ לא צובר קרדיטים'}
+              </div>
+              <div className="px-3 py-1.5 text-center border-t border-white/10">
+                <p className="text-white/40 text-xs">
+                  {isRTL
+                    ? '🎁 100 קרדיט בהצטרפות · ➕ 10 קרדיט לכל יום פעיל'
+                    : '🎁 100 on joining · ➕ 10 per active day'}
+                </p>
               </div>
             </div>
           )}

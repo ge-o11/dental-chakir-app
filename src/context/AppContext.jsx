@@ -83,6 +83,9 @@ function reducer(state, action) {
         menuOpen: false,
       }
 
+    case 'SET_USER_NAME':
+      return { ...state, user: state.user ? { ...state.user, name: action.payload } : state.user }
+
     default:
       return state
   }
@@ -172,6 +175,7 @@ export function AppProvider({ children }) {
       window.history.replaceState({ page: 'landing', section: 'workshop-details' }, '')
       dispatch({ type: 'LOGOUT' })
     },
+    setUserName: (name) => dispatch({ type: 'SET_USER_NAME', payload: name }),
   }
 
   return (
