@@ -32,15 +32,18 @@ export default function RightSideMenu() {
   const [isActive, setIsActive] = useState(true)
 
   useEffect(() => {
-    if (!state.code || !state.menuOpen) return
-    supabase.from('members_credits')
-      .select('credits, is_active')
-      .eq('coupon', state.code)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data) { setCredits(data.credits); setIsActive(data.is_active) }
-      })
-  }, [state.code, state.menuOpen])
+    if (!state.menuOpen) return
+    const byPhone = !state.code && state.user?.phone
+    if (!state.code && !byPhone) return
+
+    const q = byPhone
+      ? supabase.from('members_credits').select('credits, is_active').eq('phone', state.user.phone)
+      : supabase.from('members_credits').select('credits, is_active').eq('coupon', state.code)
+
+    q.maybeSingle().then(({ data }) => {
+      if (data) { setCredits(data.credits); setIsActive(data.is_active) }
+    })
+  }, [state.code, state.menuOpen, state.user?.phone])
 
   return (
     <>
@@ -92,7 +95,7 @@ export default function RightSideMenu() {
           )}
 
           {/* Credits box */}
-          {state.hasCode && (
+          {state.user && (
             <div className="mt-3 rounded-xl overflow-hidden border border-yellow-400/30"
               style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0d7377 100%)' }}>
               <div className="px-3 py-3 flex items-center gap-3">
