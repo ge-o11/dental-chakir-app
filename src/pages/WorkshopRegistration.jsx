@@ -18,7 +18,14 @@ export default function WorkshopRegistration() {
   const w  = tr.workshopRegistration
   const rtl = isRTL(state.language)
 
-  const [form, setForm] = useState({
+  // Check if this user already registered (persisted across sessions)
+  const savedReg = storage.get('chakir_registration')
+  const wasAlreadyRegistered = !!(savedReg && (
+    (state.code && savedReg.code === state.code) ||
+    (state.user?.phone && savedReg.phone === state.user?.phone)
+  ))
+
+  const [form, setForm] = useState(wasAlreadyRegistered ? savedReg : {
     fullName: state.user?.name || '',
     phone:    state.user?.phone || '',
     code:     state.code || '',
@@ -28,7 +35,7 @@ export default function WorkshopRegistration() {
   })
   const [errors,     setErrors]     = useState({})
   const [submitting, setSubmitting] = useState(false)
-  const [success,    setSuccess]    = useState(false)
+  const [success,    setSuccess]    = useState(wasAlreadyRegistered)
 
   const update = (k, v) => {
     setForm(f => ({ ...f, [k]: v }))
@@ -62,17 +69,39 @@ export default function WorkshopRegistration() {
   if (success) {
     return (
       <div className="pt-8 pb-4 flex flex-col items-center text-center animate-scale-in">
+
+        {/* Already-registered notice */}
+        {wasAlreadyRegistered && (
+          <div className="w-full max-w-sm mb-5 flex items-center gap-2.5 bg-amber-50
+            border border-amber-200 rounded-2xl px-4 py-3">
+            <span className="text-xl">📋</span>
+            <p className="text-amber-800 text-sm font-semibold text-start">
+              {rtl
+                ? 'כבר נרשמת לסדנה! הפרטים שלך שמורים למטה.'
+                : 'You\'re already registered! Your details are below.'}
+            </p>
+          </div>
+        )}
+
         {/* Success icon */}
         <div className="relative mb-5">
           <div className="w-28 h-28 rounded-full bg-gradient-to-br from-green-400 to-emerald-500
             flex items-center justify-center shadow-xl shadow-green-400/30">
             <CheckCircle2 size={52} className="text-white" />
           </div>
-          <span className="absolute -top-1 -end-1 text-2xl animate-bounce">🎉</span>
-          <span className="absolute -bottom-1 -start-1 text-xl animate-pulse">✨</span>
+          {!wasAlreadyRegistered && (
+            <>
+              <span className="absolute -top-1 -end-1 text-2xl animate-bounce">🎉</span>
+              <span className="absolute -bottom-1 -start-1 text-xl animate-pulse">✨</span>
+            </>
+          )}
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">{w.successTitle}</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          {wasAlreadyRegistered
+            ? (rtl ? 'רשום לסדנה ✓' : 'Already Registered ✓')
+            : w.successTitle}
+        </h2>
         <p className="text-gray-500 text-sm leading-relaxed max-w-xs mb-6">{w.successText}</p>
 
         {/* Confirmation card */}
