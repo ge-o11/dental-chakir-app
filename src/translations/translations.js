@@ -72,6 +72,8 @@ export const translations = {
         phoneInvalid:    'מספר טלפון לא תקין',
         passRequired:    'יש להזין סיסמה',
         passShort:       'הסיסמה חייבת להכיל לפחות 6 תווים',
+        notFound:        'מספר הטלפון לא נמצא במערכת',
+        wrongPass:       'סיסמה שגויה',
       },
     },
 
@@ -368,6 +370,8 @@ export const translations = {
         phoneInvalid:    'رقم الهاتف غير صالح',
         passRequired:    'يجب إدخال كلمة المرور',
         passShort:       'يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل',
+        notFound:        'رقم الهاتف غير موجود في النظام',
+        wrongPass:       'كلمة المرور غير صحيحة',
       },
     },
 
@@ -602,6 +606,8 @@ export const translations = {
         phoneInvalid:    'Неверный номер телефона',
         passRequired:    'Необходимо ввести пароль',
         passShort:       'Пароль должен содержать не менее 6 символов',
+        notFound:        'Номер телефона не найден в системе',
+        wrongPass:       'Неверный пароль',
       },
     },
 
@@ -836,6 +842,8 @@ export const translations = {
         phoneInvalid:    'Invalid phone number',
         passRequired:    'Please enter a password',
         passShort:       'Password must be at least 6 characters',
+        notFound:        'Phone number not found in the system',
+        wrongPass:       'Incorrect password',
       },
     },
 

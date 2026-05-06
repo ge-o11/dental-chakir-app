@@ -3,6 +3,7 @@ import { Phone, Lock, Eye, EyeOff, ArrowLeft, ArrowRight, LogIn } from 'lucide-r
 import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
 import LanguageSwitcher from '../components/LanguageSwitcher.jsx'
+import { supabase } from '../lib/supabase.js'
 
 function validatePhone(phone) {
   const cleaned = phone.replace(/[\s\-().]/g, '')
@@ -38,9 +39,28 @@ export default function LoginPage() {
     if (Object.keys(errs).length) { setErrors(errs); return }
     setErrors({})
     setLoading(true)
-    await new Promise(r => setTimeout(r, 1000))
+
+    const cleanPhone = phone.trim()
+    const { data: member, error } = await supabase
+      .from('members_codes')
+      .select('phone, name, password')
+      .eq('phone', cleanPhone)
+      .maybeSingle()
+
     setLoading(false)
-    actions.login({ phone: phone.trim(), isLoggedIn: true })
+
+    if (error || !member) {
+      setErrors({ phone: tr.login.errors.notFound || 'מספר טלפון לא נמצא במערכת' })
+      return
+    }
+
+    // If member has a password set — validate it
+    if (member.password && member.password !== pass) {
+      setErrors({ pass: tr.login.errors.wrongPass || 'סיסמה שגויה' })
+      return
+    }
+
+    actions.login({ phone: cleanPhone, name: member.name || '', isLoggedIn: true })
   }
 
   return (
