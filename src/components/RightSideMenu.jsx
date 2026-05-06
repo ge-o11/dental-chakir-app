@@ -145,14 +145,16 @@ export default function RightSideMenu() {
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => { actions.setSection('contact'); actions.closeMenu() }}
-                className="w-full py-2 text-center text-xs font-bold text-teal-200
+              <a
+                href="https://chat.whatsapp.com/It6v3y6bt4B9cVim2HjJps"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full py-2 text-center text-xs font-bold text-teal-200
                   bg-teal-500/20 hover:bg-teal-500/35 active:bg-teal-500/50
                   transition-colors border-t border-teal-400/20"
               >
                 {isRTL ? '✨ הצטרף לקהילה' : '✨ Join the community'}
-              </button>
+              </a>
             </div>
           )}
         </div>
