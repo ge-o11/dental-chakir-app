@@ -191,4 +191,4 @@ export function useApp() {
   return ctx
 }
 
-export { storage, STORAGE_KEYS }
+export { storage, STORAGE_KEYS, AppContext }

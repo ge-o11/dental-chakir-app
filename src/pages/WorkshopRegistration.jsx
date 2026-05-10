@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CheckCircle2, Send, User, Phone, KeyRound, Building2, Mail, Globe,
          Calendar, Clock, MapPin, Sparkles, Star } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
@@ -37,6 +37,13 @@ export default function WorkshopRegistration() {
   const [errors,     setErrors]     = useState({})
   const [submitting, setSubmitting] = useState(false)
   const [success,    setSuccess]    = useState(wasAlreadyRegistered)
+  const [showBanner, setShowBanner] = useState(wasAlreadyRegistered)
+
+  useEffect(() => {
+    if (!showBanner) return
+    const t = setTimeout(() => setShowBanner(false), 5000)
+    return () => clearTimeout(t)
+  }, [showBanner])
 
   const update = (k, v) => {
     setForm(f => ({ ...f, [k]: v }))
@@ -83,10 +90,11 @@ export default function WorkshopRegistration() {
     return (
       <div className="pt-8 pb-4 flex flex-col items-center text-center animate-scale-in">
 
-        {/* Already-registered notice */}
-        {wasAlreadyRegistered && (
+        {/* Already-registered notice — auto-dismisses after 5 s */}
+        {showBanner && (
           <div className="w-full max-w-sm mb-5 flex items-center gap-2.5 bg-amber-50
-            border border-amber-200 rounded-2xl px-4 py-3">
+            border border-amber-200 rounded-2xl px-4 py-3
+            animate-fade-in transition-opacity duration-500">
             <span className="text-xl">📋</span>
             <p className="text-amber-800 text-sm font-semibold text-start">
               {rtl

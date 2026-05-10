@@ -6,6 +6,7 @@ import LandingPage      from './pages/LandingPage.jsx'
 import CodeEntryPage    from './pages/CodeEntryPage.jsx'
 import LoginPage        from './pages/LoginPage.jsx'
 import DashboardLayout  from './pages/DashboardLayout.jsx'
+import ScreenMap        from './pages/ScreenMap.jsx'
 
 function Router() {
   const { state } = useApp()
@@ -26,6 +27,9 @@ function Router() {
 }
 
 export default function App() {
+  if (window.location.pathname === '/screen-map') {
+    return <ScreenMap />
+  }
   return (
     <AppProvider>
       <Router />

@@ -1,14 +1,82 @@
 import React, { useEffect, useState } from 'react'
-import { Coins, Phone, KeyRound, User, Calendar, CheckCircle2, XCircle, Sparkles, Info } from 'lucide-react'
+import { Coins, Phone, KeyRound, User, Calendar, CheckCircle2, XCircle, Sparkles, Info, ClipboardList, Building2, Mail } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
 import { supabase } from '../lib/supabase.js'
+import { storage } from '../context/AppContext.jsx'
 
 const FacebookIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
   </svg>
 )
+
+function RegistrationSummary({ isRTL }) {
+  const [open, setOpen] = useState(false)
+  const reg = storage.get('chakir_registration')
+  if (!reg) return null
+
+  const formatDate = (d) => {
+    if (!d) return '—'
+    return new Date(d).toLocaleDateString(isRTL ? 'he-IL' : 'en-GB', {
+      year: 'numeric', month: 'long', day: 'numeric',
+    })
+  }
+
+  const rows = [
+    { icon: User,        label: isRTL ? 'שם מלא'          : 'Full Name',   value: reg.fullName },
+    { icon: Phone,       label: isRTL ? 'טלפון'            : 'Phone',       value: reg.phone,   ltr: true },
+    { icon: Building2,   label: isRTL ? 'שם המרפאה'        : 'Clinic',      value: reg.clinic },
+    { icon: Mail,        label: isRTL ? 'אימייל'           : 'Email',       value: reg.email,   ltr: true },
+    { icon: KeyRound,    label: isRTL ? 'קוד'              : 'Code',        value: reg.code,    ltr: true },
+    { icon: Calendar,    label: isRTL ? 'תאריך הרשמה'      : 'Registered',  value: formatDate(reg.timestamp) },
+  ].filter(r => r.value)
+
+  return (
+    <div className="rounded-3xl overflow-hidden border border-brand-100/60 shadow-sm bg-white">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-5 py-4 text-start"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center flex-shrink-0">
+            <ClipboardList size={17} className="text-brand-600" />
+          </div>
+          <div>
+            <p className="font-bold text-gray-800 text-sm">
+              {isRTL ? 'הרשמה לסדנה' : 'Workshop Registration'}
+            </p>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {isRTL ? 'נרשמת בתאריך ' + formatDate(reg.timestamp) : 'Registered on ' + formatDate(reg.timestamp)}
+            </p>
+          </div>
+        </div>
+        <span className={`text-brand-600 text-lg transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+          ›
+        </span>
+      </button>
+
+      {open && (
+        <div className="border-t border-gray-100 divide-y divide-gray-100">
+          {rows.map(({ icon: Icon, label, value, ltr }) => (
+            <div key={label} className="flex items-center gap-4 px-5 py-3">
+              <div className="w-8 h-8 rounded-lg bg-brand-50 flex items-center justify-center flex-shrink-0">
+                <Icon size={15} className="text-brand-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-gray-400">{label}</p>
+                <p className={`text-gray-800 font-semibold text-sm truncate ${ltr ? 'font-mono' : ''}`}
+                  dir={ltr ? 'ltr' : undefined}>
+                  {value}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function ProfilePage() {
   const { state } = useApp()
@@ -197,6 +265,9 @@ export default function ProfilePage() {
           </div>
         </div>
       )}
+
+      {/* ── Workshop registration summary ── */}
+      <RegistrationSummary isRTL={isRTL} />
 
       {/* ── Non-member join CTA ── */}
       {loaded && !isMember && (
