@@ -113,12 +113,10 @@ function RegistrationToast() {
           {state.notification?.alreadyRegistered ? '📋 כבר רשום לסדנה!' : '🎉 נרשמת לסדנה בהצלחה!'}
         </p>
 
-        {/* Name */}
-        {name && (
-          <p style={{ color:'rgba(255,255,255,0.7)', fontSize:14, marginBottom:20 }}>
-            {name}، ברוך הבא לסדנה
-          </p>
-        )}
+        {/* Subtitle */}
+        <p style={{ color:'rgba(255,255,255,0.7)', fontSize:14, marginBottom:20 }}>
+          ברוכים הבאים לסדנה
+        </p>
 
         {/* "Background is ready" hint */}
         <p style={{
