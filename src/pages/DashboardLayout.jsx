@@ -114,8 +114,8 @@ function RegistrationToast() {
         </p>
 
         {/* Subtitle */}
-        <p style={{ color:'rgba(255,255,255,0.7)', fontSize:14, marginBottom:20 }}>
-          ברוכים הבאים לסדנה
+        <p style={{ color:'rgba(255,255,255,0.7)', fontSize:14, marginBottom:20, lineHeight:1.7 }}>
+          דוקטור {name}<br />נשמח לראות אותך בסדנה
         </p>
 
         {/* "Background is ready" hint */}
