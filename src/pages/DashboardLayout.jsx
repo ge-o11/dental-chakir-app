@@ -110,7 +110,7 @@ function RegistrationToast() {
 
         {/* Title */}
         <p style={{ color:'white', fontWeight:900, fontSize:22, marginBottom:8, lineHeight:1.2 }}>
-          🎉 נרשמת לסדנה בהצלחה!
+          {state.notification?.alreadyRegistered ? '📋 כבר רשום לסדנה!' : '🎉 נרשמת לסדנה בהצלחה!'}
         </p>
 
         {/* Name */}
