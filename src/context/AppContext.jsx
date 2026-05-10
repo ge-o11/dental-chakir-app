@@ -29,6 +29,7 @@ function loadInitialState() {
     codeValidated:  savedSession?.codeValidated || false,
     hasCode:        savedSession?.hasCode || false,   // true = entered with coupon, workshop is free
     user:           savedUser || null,
+    notification:   null,
   }
 }
 
@@ -85,6 +86,12 @@ function reducer(state, action) {
 
     case 'SET_USER_NAME':
       return { ...state, user: state.user ? { ...state.user, name: action.payload } : state.user }
+
+    case 'SET_NOTIFICATION':
+      return { ...state, notification: action.payload }
+
+    case 'CLEAR_NOTIFICATION':
+      return { ...state, notification: null }
 
     default:
       return state
@@ -175,7 +182,9 @@ export function AppProvider({ children }) {
       window.history.replaceState({ page: 'landing', section: 'workshop-details' }, '')
       dispatch({ type: 'LOGOUT' })
     },
-    setUserName: (name) => dispatch({ type: 'SET_USER_NAME', payload: name }),
+    setUserName:       (name) => dispatch({ type: 'SET_USER_NAME',    payload: name }),
+    setNotification:   (n)    => dispatch({ type: 'SET_NOTIFICATION', payload: n }),
+    clearNotification: ()     => dispatch({ type: 'CLEAR_NOTIFICATION' }),
   }
 
   return (

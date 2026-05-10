@@ -45,12 +45,6 @@ export default function WorkshopRegistration() {
     return () => clearTimeout(t)
   }, [showBanner])
 
-  // After showing success screen, navigate to workshop-details
-  useEffect(() => {
-    if (!success) return
-    const t = setTimeout(() => actions.setSection('workshop-details'), 3000)
-    return () => clearTimeout(t)
-  }, [success])
 
   const update = (k, v) => {
     setForm(f => ({ ...f, [k]: v }))
@@ -89,7 +83,9 @@ export default function WorkshopRegistration() {
     }
 
     setSubmitting(false)
-    setSuccess(true)
+    // Show overlay toast on top of workshop-details instead of a full success screen
+    actions.setNotification({ name: form.fullName.trim() })
+    actions.setSection('workshop-details')
   }
 
   /* ── Success screen ── */
