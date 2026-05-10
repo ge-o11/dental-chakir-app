@@ -18,7 +18,7 @@ import { supabase } from '../lib/supabase.js'
 const MENU_ITEMS = [
   { key: 'profile',               icon: UserCircle,    navKey: 'profile' },
   { key: 'workshop-details',      icon: BookOpen,      navKey: 'workshopDetails' },
-  { key: 'workshop-registration', icon: ClipboardList, navKey: 'workshopRegistration' },
+  { key: 'my-workshops',          icon: ClipboardList, navKey: 'workshopRegistration' },
   { key: 'about',                 icon: Info,          navKey: 'about' },
   { key: 'products',              icon: ShoppingBag,   navKey: 'products' },
   { key: 'location',              icon: MapPin,        navKey: 'location' },

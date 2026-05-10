@@ -128,14 +128,6 @@ export default function WorkshopDetails() {
         </div>
       </div>
 
-      {/* CTA */}
-      <button
-        onClick={() => actions.setSection('workshop-registration')}
-        className="btn-primary w-full py-4 text-base gap-2"
-      >
-        <span>{w.cta}</span>
-        <ArrowIcon size={20} />
-      </button>
     </div>
   )
 }

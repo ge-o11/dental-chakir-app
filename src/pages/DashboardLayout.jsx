@@ -7,6 +7,7 @@ import CreditsCard from '../components/CreditsCard.jsx'
 import ProfilePage          from './ProfilePage.jsx'
 import WorkshopDetails      from './WorkshopDetails.jsx'
 import WorkshopRegistration from './WorkshopRegistration.jsx'
+import MyWorkshops          from './MyWorkshops.jsx'
 import AboutDentalChakir    from './AboutDentalChakir.jsx'
 import CommunityProducts    from './CommunityProducts.jsx'
 import WorkshopLocation     from './WorkshopLocation.jsx'
@@ -18,6 +19,7 @@ const SECTIONS = {
   'profile':               ProfilePage,
   'workshop-details':      WorkshopDetails,
   'workshop-registration': WorkshopRegistration,
+  'my-workshops':          MyWorkshops,
   'about':                 AboutDentalChakir,
   'products':              CommunityProducts,
   'location':              WorkshopLocation,
