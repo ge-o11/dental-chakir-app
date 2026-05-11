@@ -106,7 +106,9 @@ export default function AuthFlow() {
   }
 
   function handlePhoneChange(e) {
-    const digits = e.target.value.replace(/\D/g, '').slice(0, 10)
+    let raw = e.target.value.replace(/\D/g, '')
+    if (raw.startsWith('972')) raw = '0' + raw.slice(3)
+    const digits = raw.slice(0, 10)
     setPhone(formatPhoneDisplay(digits))
     setErrors(p => ({ ...p, phone: '' }))
   }
