@@ -228,7 +228,7 @@ export default function AuthFlow() {
     await emailjs.send(
       config.emailjs.serviceId,
       config.emailjs.templateId,
-      { to_email: emailAddr, otp_code: otp, user_name: member?.name || '' },
+      { to_email: emailAddr, email: emailAddr, otp_code: otp, user_name: member?.name || '' },
       config.emailjs.publicKey,
     )
 
