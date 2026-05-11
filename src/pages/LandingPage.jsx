@@ -63,7 +63,7 @@ export default function LandingPage() {
 
         {/* CTA */}
         <button
-          onClick={() => actions.setPage('code-entry')}
+          onClick={() => actions.setPage('auth')}
           className="w-full max-w-sm flex items-center justify-center gap-3
             bg-white text-brand-800 font-bold text-lg py-4 px-8 rounded-2xl
             shadow-2xl shadow-brand-900/30 hover:bg-brand-50 active:scale-95

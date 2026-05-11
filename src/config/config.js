@@ -114,6 +114,12 @@ export const config = {
     },
   ],
 
+  emailjs: {
+    serviceId:  'service_78uu926',
+    templateId: 'template_j8jvau6',
+    publicKey:  'rGFYEkeHVeOYMiHjJ',
+  },
+
   languages: ['he', 'ar', 'ru', 'en'],
   defaultLanguage: 'he',
 

@@ -65,6 +65,18 @@ function reducer(state, action) {
         menuOpen: false,
       }
 
+    case 'LOGIN_FULL':
+      return {
+        ...state,
+        user: { ...action.payload.user, isLoggedIn: true },
+        code:          action.payload.code || '',
+        codeValidated: !!action.payload.code,
+        hasCode:       !!action.payload.code,
+        currentPage: 'dashboard',
+        currentSection: 'workshop-registration',
+        menuOpen: false,
+      }
+
     case 'LOGOUT':
       return {
         ...state,
@@ -177,6 +189,10 @@ export function AppProvider({ children }) {
     login: (userData) => {
       pushHistory('dashboard', 'workshop-registration')
       dispatch({ type: 'LOGIN', payload: userData })
+    },
+    loginFull: (userData, couponCode) => {
+      pushHistory('dashboard', 'workshop-registration')
+      dispatch({ type: 'LOGIN_FULL', payload: { user: userData, code: couponCode || '' } })
     },
     logout: () => {
       window.history.replaceState({ page: 'landing', section: 'workshop-details' }, '')
