@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-import emailjs from '@emailjs/browser'
 import {
   Phone, Lock, Eye, EyeOff, User, Mail, Gift,
   ChevronDown, ChevronUp, Check, ArrowLeft, ArrowRight, Loader2, KeyRound,
@@ -225,12 +224,10 @@ export default function AuthFlow() {
       .eq('phone', targetPhone)
 
     // Send via EmailJS
-    await emailjs.send(
-      config.emailjs.serviceId,
-      config.emailjs.templateId,
-      { to_email: emailAddr, email: emailAddr, otp_code: otp, user_name: member?.name || '' },
-      config.emailjs.publicKey,
-    )
+    const { error: fnError } = await supabase.functions.invoke('send-otp', {
+      body: { to_email: emailAddr, otp_code: otp, user_name: member?.name || '' },
+    })
+    if (fnError) throw fnError
 
     setSentTo(maskEmail(emailAddr))
     setResetStep('otp')
