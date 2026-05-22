@@ -49,7 +49,7 @@ export default function MyWorkshops() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-white/70 text-xs font-medium mb-1">
-                {isRTL ? "קהילת דנטל צ'אקיר" : "Dental Chakir Community"}
+                {isRTL ? 'קהילת דנטל ישראל' : 'Dental Israel Community'}
               </p>
               <h2 className="text-white font-extrabold text-lg leading-tight">
                 {isRTL ? 'סדנת AI דנטלי' : 'Dental AI Workshop'}

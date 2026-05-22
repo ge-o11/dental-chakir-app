@@ -31,7 +31,7 @@ export default function Header({ showMenu = false }) {
           </div>
           <div className="min-w-0">
             <p className="text-white font-bold text-sm leading-tight truncate">
-              צ'אקיר AI
+              דנטל ישראל
             </p>
             {state.code && (
               <button

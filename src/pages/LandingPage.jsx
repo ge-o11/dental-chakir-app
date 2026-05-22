@@ -1,5 +1,5 @@
 import React from 'react'
-import { Brain, Users, Star, Zap, ArrowLeft, ArrowRight, Globe } from 'lucide-react'
+import { Brain, Users, Star, Zap, ArrowLeft, ArrowRight, Globe, BookOpen } from 'lucide-react'
 
 const FacebookIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -98,7 +98,7 @@ export default function LandingPage() {
         </div>
 
         {/* Social / external links */}
-        <div className="mt-6 flex gap-3 animate-fade-in">
+        <div className="mt-6 flex flex-wrap gap-3 justify-center animate-fade-in">
           <a
             href="https://www.dentalchakir.co.il/"
             target="_blank"
@@ -122,6 +122,18 @@ export default function LandingPage() {
           >
             <FacebookIcon size={15} />
             <span>{isRTL ? 'פייסבוק' : 'Facebook'}</span>
+          </a>
+          <a
+            href="https://share.google/D6qUgm3ilIzEv9e0B"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl
+              bg-white/15 border border-white/25 backdrop-blur-sm
+              text-white text-sm font-semibold
+              hover:bg-white/25 active:scale-95 transition-all duration-200"
+          >
+            <BookOpen size={15} className="text-teal-300" />
+            <span>{isRTL ? 'מאמרים מקצועיים' : 'Articles'}</span>
           </a>
         </div>
       </div>

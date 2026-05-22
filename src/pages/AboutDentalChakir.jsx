@@ -24,8 +24,8 @@ export default function AboutDentalChakir() {
           <div className="text-4xl mb-3">🦷✨</div>
           <h2 className="text-xl font-black leading-tight mb-2">
             {['he','ar'].includes(state.language)
-              ? "דנטל צ'אקיר"
-              : 'Dental Chakir'}
+              ? 'קהילת דנטל ישראל'
+              : 'Dental Israel Community'}
           </h2>
           <p className="text-white/80 text-sm leading-relaxed">{ab.whoText}</p>
         </div>

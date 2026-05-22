@@ -8,21 +8,27 @@ export default function CreditsCard() {
   const [data, setData]       = useState(null)
   const [loading, setLoading] = useState(true)
 
+  const phone = state.user?.phone
+
   useEffect(() => {
-    if (!state.code) return
+    if (!phone) { setLoading(false); return }
     setLoading(true)
     supabase
       .from('members_credits')
       .select('credits, is_active, days_active')
-      .eq('coupon', state.code)
-      .maybeSingle()
-      .then(({ data: row }) => {
-        setData(row || { credits: 0, is_active: false, days_active: 0 })
+      .eq('phone', phone)
+      .order('is_active', { ascending: false })
+      .order('credits', { ascending: false })
+      .limit(1)
+      .then(({ data: rows }) => {
+        const row = rows?.[0] || null
+        setData(row?.is_active ? row : null)
         setLoading(false)
       })
-  }, [state.code])
+  }, [phone])
 
-  if (!state.code) return null
+  if (!phone) return null
+  if (!loading && !data) return null
 
   const credits    = data?.credits    ?? 0
   const isActive   = data?.is_active  ?? false

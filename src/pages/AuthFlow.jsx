@@ -136,10 +136,14 @@ export default function AuthFlow() {
 
     setErrors({})
     setLoading(true)
-    const { data: member } = await supabase
-      .from('members_codes').select('phone, name, password, email').in('phone', buildPhoneVariants(cleaned)).maybeSingle()
+    const { data: members } = await supabase
+      .from('members_codes').select('phone, name, password, email')
+      .in('phone', buildPhoneVariants(cleaned))
+      .order('is_active', { ascending: false })
+      .order('date_joined', { ascending: false })
     setLoading(false)
 
+    const member = members?.[0] || null
     setUserType(member ? 'returning' : 'new')
     if (member?.name)  setName(member.name)
     if (member?.email) setEmail(member.email)
@@ -161,11 +165,16 @@ export default function AuthFlow() {
     const cleaned = phone.replace(/[\s\-().]/g, '')
 
     try {
-      const { data: member, error: fe } = await supabase
-        .from('members_codes').select('phone, name, password, email').in('phone', buildPhoneVariants(cleaned)).maybeSingle()
+      const { data: members, error: fe } = await supabase
+        .from('members_codes').select('phone, name, password, email')
+        .in('phone', buildPhoneVariants(cleaned))
+        .order('is_active', { ascending: false })
+        .order('date_joined', { ascending: false })
       if (fe) throw fe
 
+      const member = members?.[0] || null
       const hashed = await hashPassword(pass)
+      const hasValidCoupon = couponStatus === 'valid' && coupon.trim()
 
       if (member) {
         if (member.password) {
@@ -175,20 +184,39 @@ export default function AuthFlow() {
           if (!isHashed(member.password)) {
             await supabase.from('members_codes').update({ password: hashed }).eq('phone', member.phone)
           }
-          // save email if entered and not yet stored
-          if (email.trim() && !member.email) {
+          // save/update email if entered and different from stored
+          if (email.trim() && email.trim() !== member.email) {
             await supabase.from('members_codes').update({ email: email.trim() }).eq('phone', member.phone)
+          }
+          // if valid coupon entered, activate membership on their row
+          if (hasValidCoupon) {
+            await supabase.from('members_codes').update({ is_active: true }).eq('phone', member.phone)
+            // best-effort: save coupon if they don't have one (ignore unique conflicts)
+            await supabase.from('members_codes')
+              .update({ coupon: coupon.trim().toUpperCase() })
+              .eq('phone', member.phone).is('coupon', null)
           }
         } else {
           const { error: ue } = await supabase.from('members_codes')
-            .update({ password: hashed, ...(name.trim() ? { name: name.trim() } : {}), ...(email.trim() ? { email: email.trim() } : {}) })
+            .update({
+              password: hashed,
+              ...(name.trim() ? { name: name.trim() } : {}),
+              ...(email.trim() ? { email: email.trim() } : {}),
+              ...(hasValidCoupon ? { is_active: true } : {}),
+            })
             .eq('phone', member.phone)
           if (ue) throw ue
+          if (hasValidCoupon) {
+            await supabase.from('members_codes')
+              .update({ coupon: coupon.trim().toUpperCase() })
+              .eq('phone', member.phone).is('coupon', null)
+          }
         }
       } else {
         const { error: ie } = await supabase.from('members_codes').insert({
           phone: cleaned, password: hashed, name: name.trim(),
-          email: email.trim() || null, is_active: false,
+          email: email.trim() || null,
+          is_active: !!hasValidCoupon,
           date_joined: new Date().toISOString().split('T')[0],
         })
         if (ie) throw ie
@@ -599,23 +627,23 @@ export default function AuthFlow() {
                       </div>
                     )}
 
-                    {/* Email (new users — for password recovery) */}
-                    {userType === 'new' && (
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          {tr.auth.emailLbl}
+                    {/* Email — shown for all users */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        {tr.auth.emailLbl}
+                        {userType === 'new' && (
                           <span className="text-gray-400 font-normal text-xs ms-1">({tr.auth.emailOptional})</span>
-                        </label>
-                        <div className="relative">
-                          <Mail size={16} className="absolute top-1/2 -translate-y-1/2 start-3.5 text-gray-400 pointer-events-none" />
-                          <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                            placeholder={tr.auth.emailPh}
-                            className="input-field ps-10"
-                            dir="ltr" autoComplete="email" />
-                        </div>
-                        <p className="text-gray-400 text-xs mt-1">{tr.auth.emailHint}</p>
+                        )}
+                      </label>
+                      <div className="relative">
+                        <Mail size={16} className="absolute top-1/2 -translate-y-1/2 start-3.5 text-gray-400 pointer-events-none" />
+                        <input type="email" value={email} onChange={e => { setEmail(e.target.value); setErrors(p => ({ ...p, email: '' })) }}
+                          placeholder={tr.auth.emailPh}
+                          className="input-field ps-10"
+                          dir="ltr" autoComplete="email" />
                       </div>
-                    )}
+                      <p className="text-gray-400 text-xs mt-1">{tr.auth.emailHint}</p>
+                    </div>
 
                     {/* Password */}
                     <div>

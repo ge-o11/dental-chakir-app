@@ -4,11 +4,11 @@
 
 export const config = {
   community: {
-    name:     "קהילת דנטל צ'אקיר בקידמת ה-AI הדנטלי",
-    nameEn:   "Chakir Dental AI Community",
-    tagline:  "חדשנות • מקצועיות • עתיד הדנטיסטריה",
-    taglineEn:"Innovation • Professionalism • The Future of Dentistry",
-    logo:     null, // path or URL to logo image
+    name:     'קהילת דנטל ישראל',
+    nameEn:   'Dental Israel Community',
+    tagline:  'הבית המקצועי של רופאי השיניים והטכנאים בישראל',
+    taglineEn:'The Professional Home of Dentists and Technicians in Israel',
+    logo:     null,
   },
 
   workshop: {
@@ -16,53 +16,99 @@ export const config = {
     currency:      '₪',
     freeForMembers: true,
 
-    // Date/time
-    date:          '2026-07-01',           // YYYY-MM-DD
-    time:          '18:00',                // HH:MM (24h)
+    date:          '2026-07-01',
+    time:          '18:00',
     durationHours: 3,
     dateDisplay:   '1 ביולי 2026',
     timeDisplay:   '18:00 – 21:00',
 
-    // Location
     address: {
-      street:  "רחוב הטכנולוגיה 12",
-      city:    "תל אביב",
-      full:    "רחוב הטכנולוגיה 12, תל אביב 6971004",
-      fullEn:  "12 HaTechnologia St, Tel Aviv 6971004",
+      street:  'רחוב הטכנולוגיה 12',
+      city:    'תל אביב',
+      full:    'רחוב הטכנולוגיה 12, תל אביב 6971004',
+      fullEn:  '12 HaTechnologia St, Tel Aviv 6971004',
     },
 
-    // Navigation links (update with real links)
     wazeLink:       'https://waze.com/ul?q=רחוב+הטכנולוגיה+12+תל+אביב&navigate=yes',
     googleMapsLink: 'https://maps.google.com/?q=רחוב+הטכנולוגיה+12,+תל+אביב',
 
-    // Google Calendar deeplink
     googleCalendarLink: (() => {
-      const title   = encodeURIComponent("סדנת AI דנטלי – קהילת צ'אקיר");
-      const details = encodeURIComponent("סדנה מקצועית לרופאי שיניים בנושא בינה מלאכותית בדנטיסטריה. כניסה חופשית לחברי הקהילה.");
-      const location= encodeURIComponent("רחוב הטכנולוגיה 12, תל אביב");
+      const title   = encodeURIComponent('סדנת קהילת דנטל ישראל');
+      const details = encodeURIComponent('סדנה מקצועית של קהילת דנטל ישראל. כניסה חופשית לחברי הקהילה.');
+      const location= encodeURIComponent('רחוב הטכנולוגיה 12, תל אביב');
       const start   = '20260701T180000';
       const end     = '20260701T210000';
       return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${location}`;
     })(),
 
-    // Outlook / ICS download
     outlookIcsData: {
-      uid:         'dental-chakir-workshop-20260701@chakir.co.il',
-      summary:     "סדנת AI דנטלי – קהילת צ'אקיר",
-      description: 'סדנה מקצועית לרופאי שיניים. כניסה חופשית לחברי הקהילה.',
+      uid:         'dental-israel-workshop-20260701@dentalchakir.co.il',
+      summary:     'סדנת קהילת דנטל ישראל',
+      description: 'סדנה מקצועית של קהילת דנטל ישראל. כניסה חופשית לחברי הקהילה.',
       location:    'רחוב הטכנולוגיה 12, תל אביב',
-      dtstart:     '20260701T150000Z',   // UTC (18:00 IL = 15:00 UTC)
+      dtstart:     '20260701T150000Z',
       dtend:       '20260701T180000Z',
     },
   },
 
   contact: {
+    representatives: [
+      {
+        id: 'meital',
+        name: 'מיטל',
+        nameEn: 'Meital',
+        specialty: 'הלבנת שיניים וניהול פרויקטים',
+        specialtyEn: 'Teeth Whitening & Project Management',
+        phone: '052-622-747',
+        phoneDial: '+97252622747',
+        whatsappNumber: '97252622747',
+        whatsappDefaultMsg: 'שלום מיטל, אני חבר קהילת דנטל ישראל ואני מעוניין לשאול לגבי הלבנת שיניים',
+        emoji: '👩‍⚕️',
+      },
+      {
+        id: 'wasim',
+        name: 'ואסים',
+        nameEn: 'Wasim',
+        specialty: 'סורקים, כרסומות ומדפסות בתלת-ממד',
+        specialtyEn: 'Scanners, Milling & 3D Printers',
+        phone: '052-231-7062',
+        phoneDial: '+972522317062',
+        whatsappNumber: '972522317062',
+        whatsappDefaultMsg: 'שלום ואסים, אני חבר קהילת דנטל ישראל ואני מעוניין לשאול לגבי סורקים וכרסומות',
+        emoji: '🔬',
+      },
+      {
+        id: 'sina',
+        name: 'סינא',
+        nameEn: 'Sina',
+        specialty: 'קאד קאם ותוכנות עיצוב',
+        specialtyEn: 'CAD/CAM & Design Software',
+        phone: '052-645-4442',
+        phoneDial: '+972526454442',
+        whatsappNumber: '972526454442',
+        whatsappDefaultMsg: 'שלום סינא, אני חבר קהילת דנטל ישראל ואני מעוניין לשאול לגבי קאד קאם ותוכנות עיצוב',
+        emoji: '💻',
+      },
+      {
+        id: 'yossi',
+        name: 'יוסי',
+        nameEn: 'Yossi',
+        specialty: 'מכשירי הדמיה, פנורמי, סיטי, פלטות פוספור וסנסורים',
+        specialtyEn: 'Imaging Equipment, Panoramic, CT, Phosphor Plates & Sensors',
+        phone: '054-677-7414',
+        phoneDial: '+972546777414',
+        whatsappNumber: '972546777414',
+        whatsappDefaultMsg: 'שלום יוסי, אני חבר קהילת דנטל ישראל ואני מעוניין לשאול לגבי ציוד הדמיה',
+        emoji: '📡',
+      },
+    ],
+    // kept for backward compatibility with existing components
     meital: {
       name:      'מיטל',
-      phone:     '050-123-4567',              // display format
-      phoneDial: '+9725012345678',             // tel: href format (no spaces/dashes)
-      whatsappNumber: '9725012345678',         // WhatsApp format (no +)
-      whatsappDefaultMsg: 'שלום מיטל, אני חבר קהילת צ\'אקיר ואני מעוניין לשאול לגבי הסדנה',
+      phone:     '052-622-747',
+      phoneDial: '+97252622747',
+      whatsappNumber: '97252622747',
+      whatsappDefaultMsg: 'שלום מיטל, אני חבר קהילת דנטל ישראל ואני מעוניין לשאול',
       workingHours: { start: 9, end: 16 },
     },
   },
@@ -70,47 +116,133 @@ export const config = {
   products: [
     {
       id: 1,
-      nameHe:        'מערכת ניתוח רנטגן AI',
-      nameEn:        'AI X-Ray Analysis System',
-      descHe:        'זיהוי אוטומטי של עששת, בעיות פריודנטליות ופתולוגיות נסתרות בצילומי רנטגן בדיוק של 97%.',
-      descEn:        'Automated detection of caries, periodontal issues and hidden pathologies in X-rays with 97% accuracy.',
-      memberPrice:   '199 ₪/חודש',
-      regularPrice:  '299 ₪/חודש',
-      image:         null,
-      whatsappMsg:   'שלום, אני מעוניין לשמוע יותר על מערכת ניתוח רנטגן AI עבור חברי קהילה',
+      nameHe: 'ציוד הדמיה',
+      nameEn: 'Imaging Equipment',
+      descHe: 'פנורמי, סיטי, פלטות פוספור וסנסורים — ציוד הדמיה מתקדם לאבחון ברמה גבוהה.',
+      descEn: 'Panoramic, CT, phosphor plates and sensors — advanced imaging for high-level diagnostics.',
+      emoji: '🔬',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי ציוד הדמיה',
+      representativeId: 'yossi',
     },
     {
       id: 2,
-      nameHe:        'פלטפורמת תקשורת חכמה',
-      nameEn:        'Smart Patient Communication',
-      descHe:        'מערכת AI לניהול תורים, תזכורות ומעקב אחרי מטופלים. חוסכת 10+ שעות שבועיות.',
-      descEn:        'AI system for managing appointments, reminders and patient follow-up. Saves 10+ hours weekly.',
-      memberPrice:   '120 ₪/חודש',
-      regularPrice:  '180 ₪/חודש',
-      image:         null,
-      whatsappMsg:   'שלום, אני מעוניין לשמוע על פלטפורמת התקשורת החכמה לחברי קהילה',
+      nameHe: 'סורקים אינטראורליים',
+      nameEn: 'Intraoral Scanners',
+      descHe: 'סורקים אינטראורליים מתקדמים לתוצאות מדויקות ונוחות לרופא ולמטופל.',
+      descEn: 'Advanced intraoral scanners for accurate and comfortable results.',
+      emoji: '🦷',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי סורקים אינטראורליים',
+      representativeId: 'wasim',
     },
     {
       id: 3,
-      nameHe:        'תכנון טיפול דיגיטלי',
-      nameEn:        'Digital Treatment Planning',
-      descHe:        'כלי AI מתקדם ליצירת תכניות טיפול מדויקות, הדמיות תלת-מימד ותיקשורת עם מטופלים.',
-      descEn:        'Advanced AI tool for creating precise treatment plans, 3D visualizations and patient communication.',
-      memberPrice:   '230 ₪/חודש',
-      regularPrice:  '350 ₪/חודש',
-      image:         null,
-      whatsappMsg:   'שלום, אני מעוניין לשמוע על כלי תכנון הטיפול הדיגיטלי לחברי קהילה',
+      nameHe: 'כרסומות',
+      nameEn: 'Milling Machines',
+      descHe: 'כרסומות לייצור שיקומים דנטליים דיגיטליים מדויקים ויעילים.',
+      descEn: 'Milling machines for precise and efficient digital dental restorations.',
+      emoji: '⚙️',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי כרסומות',
+      representativeId: 'wasim',
     },
     {
       id: 4,
-      nameHe:        'ניתוח ביצועי מרפאה',
-      nameEn:        'Clinic Performance Analytics',
-      descHe:        'לוח מחוונים חכם המנתח ביצועים פיננסיים, שביעות רצון מטופלים ויעילות תפעולית.',
-      descEn:        'Smart dashboard analyzing financial performance, patient satisfaction and operational efficiency.',
-      memberPrice:   '150 ₪/חודש',
-      regularPrice:  '240 ₪/חודש',
-      image:         null,
-      whatsappMsg:   'שלום, אני מעוניין לשמוע על מערכת ניתוח ביצועי המרפאה לחברי קהילה',
+      nameHe: 'מדפסות תלת-ממד',
+      nameEn: '3D Printers',
+      descHe: 'מדפסות תלת-ממד דנטליות לייצור מדריכי כירורגיה, מייצבים, קרונות ועוד.',
+      descEn: 'Dental 3D printers for surgical guides, retainers, crowns and more.',
+      emoji: '🖨️',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי מדפסות תלת-ממד',
+      representativeId: 'wasim',
+    },
+    {
+      id: 5,
+      nameHe: 'ציוד קאד קאם',
+      nameEn: 'CAD/CAM Equipment',
+      descHe: 'ציוד קאד קאם לתכנון וייצור שיקומים דנטליים דיגיטליים מדויקים.',
+      descEn: 'CAD/CAM equipment for designing and manufacturing precise digital restorations.',
+      emoji: '💻',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי ציוד קאד קאם',
+      representativeId: 'sina',
+    },
+    {
+      id: 6,
+      nameHe: 'תוכנות עיצוב',
+      nameEn: 'Design Software',
+      descHe: 'תוכנות עיצוב מתקדמות לתכנון שיקומים ותקשורת עם מעבדות דנטליות.',
+      descEn: 'Advanced design software for restoration planning and dental lab communication.',
+      emoji: '🎨',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי תוכנות עיצוב',
+      representativeId: 'sina',
+    },
+    {
+      id: 7,
+      nameHe: 'חומרי גלם',
+      nameEn: 'Raw Materials',
+      descHe: 'חומרי גלם לייצור שיקומים דנטליים — זירקוניה, PMMA, שרפים ועוד.',
+      descEn: 'Raw materials for dental restorations — zirconia, PMMA, resins and more.',
+      emoji: '🧪',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי חומרי גלם',
+      representativeId: 'wasim',
+    },
+    {
+      id: 8,
+      nameHe: 'הלבנה ביתית ומרפאתית',
+      nameEn: 'Home & In-Office Whitening',
+      descHe: 'פתרונות הלבנת שיניים ביתיים ומרפאתיים מהמותגים המובילים בעולם.',
+      descEn: 'Home and in-office teeth whitening solutions from world-leading brands.',
+      emoji: '✨',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי הלבנת שיניים',
+      representativeId: 'meital',
+    },
+    {
+      id: 9,
+      nameHe: 'פתרונות ניהול מרפאה',
+      nameEn: 'Practice Management Solutions',
+      descHe: 'תוכנות ופתרונות לניהול מרפאה, תיאום תורים, מעקב מטופלים ודיווחים.',
+      descEn: 'Software and solutions for practice management, scheduling, and patient tracking.',
+      emoji: '📋',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי פתרונות ניהול מרפאה',
+      representativeId: 'meital',
+    },
+    {
+      id: 10,
+      nameHe: 'תכנון טיפול דיגיטלי',
+      nameEn: 'Digital Treatment Planning',
+      descHe: 'פלטפורמות דיגיטליות לתכנון טיפול, תקשורת עם מטופלים והדמיות תלת-ממד.',
+      descEn: 'Digital platforms for treatment planning, patient communication and 3D visualizations.',
+      emoji: '📐',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי תכנון טיפול דיגיטלי',
+      representativeId: 'sina',
+    },
+    {
+      id: 11,
+      nameHe: 'פתרונות AI לרפואת שיניים',
+      nameEn: 'AI Solutions for Dentistry',
+      descHe: 'פתרונות בינה מלאכותית לניתוח רנטגן, אבחון, תכנון טיפול ועוד.',
+      descEn: 'AI solutions for X-ray analysis, diagnosis, treatment planning and more.',
+      emoji: '🤖',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי פתרונות AI לרפואת שיניים',
+      representativeId: 'sina',
+    },
+    {
+      id: 12,
+      nameHe: 'סדנאות והרצאות',
+      nameEn: 'Workshops & Lectures',
+      descHe: 'סדנאות, הרצאות והשתלמויות מקצועיות בתחומים הרלוונטיים לרופאים וטכנאים.',
+      descEn: 'Professional workshops, lectures and training in dentistry-related fields.',
+      emoji: '🎓',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי סדנאות והרצאות',
+      representativeId: 'meital',
+    },
+    {
+      id: 13,
+      nameHe: 'נסיעות מקצועיות לחו"ל',
+      nameEn: 'International Study Tours',
+      descHe: 'נסיעות מקצועיות והשתלמויות בחו"ל לחשיפה לטכנולוגיות ושיטות עבודה חדשות.',
+      descEn: 'International study tours and training abroad for exposure to new technologies.',
+      emoji: '✈️',
+      whatsappMsg: 'שלום, אני חבר קהילת דנטל ישראל ומעוניין לברר לגבי נסיעות מקצועיות לחו"ל',
+      representativeId: 'meital',
     },
   ],
 
@@ -123,7 +255,7 @@ export const config = {
   languages: ['he', 'ar', 'ru', 'en'],
   defaultLanguage: 'he',
 
-  // Valid entry codes (in production replace with backend validation)
-  // Set to null to accept any non-empty code
   validCodes: null,
+
+  articlesLink: 'https://share.google/D6qUgm3ilIzEv9e0B',
 }

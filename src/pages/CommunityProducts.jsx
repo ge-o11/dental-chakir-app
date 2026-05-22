@@ -1,11 +1,15 @@
 import React from 'react'
-import { MessageCircle, Tag, Package } from 'lucide-react'
+import { MessageCircle, Phone, Info } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
 import { config } from '../config/config.js'
 
 function buildWhatsAppLink(number, message) {
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`
+}
+
+function getRep(id) {
+  return config.contact.representatives.find(r => r.id === id) || config.contact.representatives[0]
 }
 
 export default function CommunityProducts() {
@@ -25,7 +29,7 @@ export default function CommunityProducts() {
       {/* Member badge */}
       <div className="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-xl px-4 py-3
         flex items-center gap-3 mb-6 shadow-md shadow-yellow-400/20">
-        <Tag size={20} className="text-white flex-shrink-0" />
+        <Info size={20} className="text-white flex-shrink-0" />
         <p className="text-white font-bold text-sm">{pr.badge}</p>
       </div>
 
@@ -33,53 +37,47 @@ export default function CommunityProducts() {
         {config.products.map(product => {
           const name = isRTL ? product.nameHe : product.nameEn
           const desc = isRTL ? product.descHe : product.descEn
-          const waLink = buildWhatsAppLink(
-            config.contact.meital.whatsappNumber,
-            product.whatsappMsg,
-          )
+          const rep = getRep(product.representativeId)
+          const waLink = buildWhatsAppLink(rep.whatsappNumber, product.whatsappMsg)
+          const repName = isRTL ? rep.name : rep.nameEn
+          const repSpecialty = isRTL ? rep.specialty : rep.specialtyEn
 
           return (
-            <div key={product.id}
-              className="card-hover overflow-hidden">
+            <div key={product.id} className="card-hover overflow-hidden">
 
-              {/* Product image / placeholder */}
-              <div className="h-28 bg-gradient-to-br from-brand-50 to-teal-50 rounded-xl mb-4
-                flex flex-col items-center justify-center border border-brand-100">
-                {product.image
-                  ? <img src={product.image} alt={name} className="w-full h-full object-cover rounded-xl" />
-                  : (
-                    <div className="text-center">
-                      <Package size={32} className="text-brand-300 mx-auto mb-1" />
-                      <p className="text-brand-400 text-xs font-medium">{name}</p>
-                    </div>
-                  )
-                }
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-12 h-12 rounded-2xl bg-brand-50 border border-brand-100
+                  flex items-center justify-center flex-shrink-0 text-2xl">
+                  {product.emoji}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-gray-900 text-base">{name}</h3>
+                  <p className="text-brand-500 text-xs mt-0.5 truncate">
+                    {isRTL ? 'נציג: ' : 'Rep: '}{repName} — {repSpecialty}
+                  </p>
+                </div>
               </div>
 
-              <h3 className="font-bold text-gray-900 text-base mb-1">{name}</h3>
               <p className="text-gray-500 text-xs leading-relaxed mb-4">{desc}</p>
 
-              {/* Pricing */}
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-xs text-gray-400 line-through">{pr.regularPrice} {product.regularPrice}</p>
-                  <div className="flex items-center gap-2">
-                    <Tag size={14} className="text-brand-600" />
-                    <p className="font-black text-brand-700 text-lg">{product.memberPrice}</p>
-                  </div>
-                </div>
-                <span className="badge-teal text-xs">{pr.badge}</span>
+              <div className="flex gap-2">
+                <a
+                  href={`tel:${rep.phoneDial}`}
+                  className="flex-1 btn-primary py-2.5 text-sm gap-1.5 justify-center"
+                >
+                  <Phone size={15} />
+                  <span>{pr.contactRep || (isRTL ? 'התקשר' : 'Call')}</span>
+                </a>
+                <a
+                  href={waLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 btn-whatsapp py-2.5 text-sm gap-1.5 justify-center"
+                >
+                  <MessageCircle size={15} />
+                  <span>{pr.inquire}</span>
+                </a>
               </div>
-
-              <a
-                href={waLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp w-full text-sm py-2.5"
-              >
-                <MessageCircle size={16} />
-                <span>{pr.inquire}</span>
-              </a>
             </div>
           )
         })}

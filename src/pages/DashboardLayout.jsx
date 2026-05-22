@@ -168,7 +168,7 @@ export default function DashboardLayout() {
       <RegistrationToast />
 
       <main className="flex-1 pt-[64px] pb-8 max-w-lg mx-auto w-full pr-[52px]">
-        {state.hasCode && state.currentSection !== 'workshop-registration' && <CreditsCard />}
+        {state.user?.isLoggedIn && state.currentSection !== 'workshop-registration' && <CreditsCard />}
         <div key={state.currentSection} className="page-enter px-4 pt-4">
           <SectionComponent />
         </div>

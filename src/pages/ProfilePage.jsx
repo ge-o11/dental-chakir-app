@@ -90,32 +90,30 @@ export default function ProfilePage() {
   const [loaded,        setLoaded]        = useState(false)
 
   useEffect(() => {
-    const byPhone = !state.code && state.user?.phone
-    if (!state.code && !byPhone) { setLoaded(true); return }
+    if (!state.user?.phone) { setLoaded(true); return }
 
-    const q = byPhone
-      ? supabase.from('members_credits')
-          .select('credits, is_active, date_joined, days_active')
-          .eq('phone', state.user.phone)
-      : supabase.from('members_credits')
-          .select('credits, is_active, date_joined, days_active')
-          .eq('coupon', state.code)
-
-    q.maybeSingle().then(({ data }) => {
-      if (data) {
-        setCredits(data.credits)
-        setIsActive(data.is_active)
-        setDateJoined(data.date_joined)
-        setDaysActive(data.days_active)
-      }
-      setLoaded(true)
-    })
-  }, [state.code, state.user?.phone])
+    supabase.from('members_credits')
+      .select('credits, is_active, date_joined, days_active')
+      .eq('phone', state.user.phone)
+      .order('is_active', { ascending: false })
+      .order('credits', { ascending: false })
+      .limit(1)
+      .then(({ data: rows }) => {
+        const data = rows?.[0] || null
+        if (data) {
+          setCredits(data.credits)
+          setIsActive(data.is_active)
+          setDateJoined(data.date_joined)
+          setDaysActive(data.days_active)
+        }
+        setLoaded(true)
+      })
+  }, [state.user?.phone])
 
   const name  = state.user?.name  || ''
   const phone = state.user?.phone || ''
   const initials = name.trim() ? name.trim().split(' ').map(w => w[0]).slice(0, 2).join('') : '👤'
-  const isMember = loaded && credits !== null
+  const isMember = loaded && isActive === true
 
   const formatDate = (d) => {
     if (!d) return '—'
@@ -166,7 +164,6 @@ export default function ProfilePage() {
         {[
           { icon: User,     label: isRTL ? 'שם מלא'        : 'Full Name',   value: name  || '—' },
           { icon: Phone,    label: isRTL ? 'מספר טלפון'    : 'Phone',       value: phone || '—', ltr: true },
-          { icon: KeyRound, label: isRTL ? 'קוד קופון'     : 'Coupon Code', value: state.code || (isRTL ? 'ללא קוד' : 'No code'), ltr: !!state.code },
           { icon: Calendar, label: isRTL ? 'תאריך הצטרפות' : 'Joined',      value: formatDate(dateJoined) },
         ].map(({ icon: Icon, label, value, ltr }) => (
           <div key={label} className="flex items-center gap-4 px-5 py-4">

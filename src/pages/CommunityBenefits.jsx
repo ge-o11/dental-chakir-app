@@ -1,9 +1,9 @@
 import React from 'react'
-import { Gift, Tag, Rss, Zap, Users, Headphones, ArrowLeft, ArrowRight } from 'lucide-react'
+import { Gift, Tag, Rss, Zap, Users, Headphones, Brain, Star, ArrowLeft, ArrowRight } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
 import { translations } from '../translations/translations.js'
 
-const ICON_MAP = { Gift, Tag, Rss, Zap, Users, Headphones }
+const ICON_MAP = { Gift, Tag, Rss, Zap, Users, Headphones, Brain, Star }
 
 const ICON_COLORS = [
   'bg-brand-50 text-brand-600',
